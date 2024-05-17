@@ -4,11 +4,12 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ftn.sbnz.model.models.Song;
-import com.ftn.sbnz.model.models.SongGenre;
+
 import com.ftn.sbnz.model.models.LearningGoal;
 import com.ftn.sbnz.model.models.Player;
 import com.ftn.sbnz.model.models.SkillLevel;
+import com.ftn.sbnz.model.models.Song;
+import com.ftn.sbnz.model.models.SongGenre;
 
 @Service
 public class ActivateRules {
