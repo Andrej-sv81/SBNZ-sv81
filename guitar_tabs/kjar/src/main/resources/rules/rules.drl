@@ -1,0 +1,52 @@
+package rules;
+
+import com.ftn.sbnz.model.models.Player;
+import com.ftn.sbnz.model.models.Song;
+import com.ftn.sbnz.model.models.SkillLevel;
+import com.ftn.sbnz.model.models.LearningGoal;
+import com.ftn.sbnz.model.models.SongGenre;
+
+rule "Beginner Player gets Beginner Level Song"
+when
+    $player : Player(level == SkillLevel.BEGINNER)
+    $song : Song(level == SkillLevel.BEGINNER)
+then
+    $player.addSong($song.getId());
+    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+end
+
+rule "Intermediate Player gets Intermediate Level Song"
+when
+    $player : Player(level == SkillLevel.INTERMEDIATE)
+    $song : Song(level == SkillLevel.INTERMEDIATE)
+then
+    $player.addSong($song.getId());
+    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+end
+
+rule "Advanced Player gets Advanced Level Song"
+when
+    $player : Player(level == SkillLevel.ADVANCED)
+    $song : Song(level == SkillLevel.ADVANCED)
+then
+    $player.addSong($song.getId());
+    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+end
+
+rule "Player that listens to Rock gets Rock Song"
+when
+    $player : Player(genre == SongGenre.ROCK)
+    $song : Song(genre == SongGenre.ROCK)
+then
+    $player.addSong($song.getId());
+    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+end
+
+rule "Player that wants to learn Rhythm guitar gets Rhythm song"
+when
+    $player : Player(goal == LearningGoal.RHYTHM)
+    $song : Song(goal == LearningGoal.RHYTHM)
+then
+    $player.addSong($song.getId());
+    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+end
