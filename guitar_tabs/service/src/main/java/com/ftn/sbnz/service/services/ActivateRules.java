@@ -1,5 +1,11 @@
 package com.ftn.sbnz.service.services;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.kie.api.builder.KieFileSystem;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +37,30 @@ public class ActivateRules {
                 LearningGoal.RHYTHM));
 
         kSession.fireAllRules();
+    }
+
+    public void reloadRules() {
+        KieSession kieSession = kieContainer.newKieSession();
+
+        // Example data for generating rules
+        List<Map<String, Object>> data = new ArrayList<>();
+        data.add(Map.of("matchAttribute", "level", "matchValue", "SkillLevel.BEGINNER"));
+        data.add(Map.of("matchAttribute", "level", "matchValue", "SkillLevel.INTERMEDIATE"));
+        data.add(Map.of("matchAttribute", "level", "matchValue", "SkillLevel.ADVANCED"));
+        data.add(Map.of("matchAttribute", "genre", "matchValue", "SongGenre.ROCK"));
+        data.add(Map.of("matchAttribute", "goal", "matchValue", "LearningGoal.RHYTHM"));
+
+        // Load and compile template with data
+        InputStream templateStream = getClass().getResourceAsStream("/rules/rule-template.drt");
+        ExternalSpreadsheetCompiler converter = new ExternalSpreadsheetCompiler();
+        // String drl = converter.compile(templateStream, data);
+
+        Object kieServices;
+        // Add to knowledge base and build
+        // KieFileSystem kfs = kieServices.newKieFileSystem();
+        // kfs.write("src/main/resources/rules.drl", drl);
+        // kieServices.newKieBuilder(kfs).buildAll();
+
+        // Continue as usual...
     }
 }
