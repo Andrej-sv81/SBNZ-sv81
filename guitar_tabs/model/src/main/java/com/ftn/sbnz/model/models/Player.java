@@ -1,33 +1,30 @@
 package com.ftn.sbnz.model.models;
 
-import java.util.List;
-
-import org.kie.api.definition.type.Position;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Player {
-    @Position(0)
     private String email;
-    @Position(1)
     private String password;
-    @Position(2)
     private SkillLevel level;
-    @Position(3)
     private SongGenre genre;
-    @Position(4)
     private LearningGoal goal;
-    @Position(5)
-    private List<Long> songs;
+    private String chords;
+    private int songCounter;
+    private Set<Long> songs;
 
     public Player() {
     }
 
-    // Constructor with all fields
-    public Player(String email, String password, SkillLevel level, SongGenre genre, LearningGoal goal) {
+    public Player(String email, String password, SkillLevel level, SongGenre genre, LearningGoal goal, String chords) {
         this.email = email;
         this.password = password;
         this.level = level;
         this.genre = genre;
         this.goal = goal;
+        this.chords = chords;
+        this.songCounter = 0;
+        this.songs = new HashSet<Long>();
     }
 
     public String getEmail() {
@@ -70,7 +67,23 @@ public class Player {
         this.goal = goal;
     }
 
-    public List<Long> getSongs() {
+    public String getChords() {
+        return chords;
+    }
+    
+    public void setChords(String chords) {
+        this.chords = chords;
+    }
+
+    public int getSongCounter() {
+        return songCounter;
+    }
+    
+    public void setSongCounter(int songCounter) {
+        this.songCounter = songCounter;
+    }
+
+    public Set<Long> getSongs() {
         return songs;
     }
 

@@ -1,19 +1,12 @@
 package com.ftn.sbnz.model.models;
 
-import org.kie.api.definition.type.Position;
 
 public class Song {
-    @Position(0)
     private Long id;
-    @Position(1)
     private String title;
-    @Position(2)
     private String content;
-    @Position(3)
     private SkillLevel level;
-    @Position(4)
     private SongGenre genre;
-    @Position(5)
     private LearningGoal goal;
 
     public Song() {
