@@ -8,17 +8,21 @@ public class Song {
     private SkillLevel level;
     private SongGenre genre;
     private LearningGoal goal;
+    private String artist;
+    private int likes;
 
     public Song() {
     }
 
-    public Song(Long id, String title, String content, SkillLevel level, SongGenre genre, LearningGoal goal) {
+    public Song(Long id, String title, String content, SkillLevel level, SongGenre genre, LearningGoal goal, String artist) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.level = level;
         this.genre = genre;
         this.goal = goal;
+        this.artist = artist;
+        this.likes = 0;
     }
 
     public Long getId() {
@@ -67,6 +71,21 @@ public class Song {
 
     public void setGoal(LearningGoal goal) {
         this.goal = goal;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
 
     @Override

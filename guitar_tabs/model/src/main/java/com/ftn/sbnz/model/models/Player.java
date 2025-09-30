@@ -12,6 +12,8 @@ public class Player {
     private String chords;
     private int songCounter;
     private Set<Long> songs;
+    private Set<Long> likedSongs;
+    private Set<Long> recommendedSongs;
 
     public Player() {
     }
@@ -25,6 +27,8 @@ public class Player {
         this.chords = chords;
         this.songCounter = 0;
         this.songs = new HashSet<Long>();
+        this.likedSongs = new HashSet<Long>();
+        this.recommendedSongs = new HashSet<Long>();
     }
 
     public String getEmail() {
@@ -89,6 +93,30 @@ public class Player {
 
     public void addSong(Long id) {
         this.songs.add(id);
+    }
+
+    public Set<Long> getLikedSongs() {
+        return likedSongs;
+    }
+
+    public void addLikedSong(Long id) {
+        this.likedSongs.add(id);
+    }
+
+    public void removeLikedSong(Long id) {
+        this.likedSongs.remove(id);
+    }
+
+    public Set<Long> getRecommendedSongs() {
+        return recommendedSongs;
+    }
+
+    public void addRecommendedSong(Long id) {
+        this.recommendedSongs.add(id);
+    }
+
+    public void clearRecommendedSongs() {
+        this.recommendedSongs.clear();
     }
 
     @Override

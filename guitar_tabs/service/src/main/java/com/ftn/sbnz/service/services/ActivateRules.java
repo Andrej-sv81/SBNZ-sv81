@@ -27,10 +27,10 @@ public class ActivateRules {
         kSession.insert(new Player("rhythmplayer@gmail.com", "rhythmrules", SkillLevel.NA, SongGenre.NA, LearningGoal.RHYTHM, "*"));
 
 
-        kSession.insert(new Song(1L, "Tisina", "Am C G Am", SkillLevel.BEGINNER, SongGenre.ROCK, LearningGoal.RHYTHM));
-        kSession.insert(new Song(2L, "Perfect", "G Em C D D F# Dsus4", SkillLevel.BEGINNER, SongGenre.POP, LearningGoal.RHYTHM));
-        kSession.insert(new Song(3L, "Let it be", "C G Am F C G F C", SkillLevel.INTERMEDIATE, SongGenre.ROCK, LearningGoal.RHYTHM));
-        kSession.insert(new Song(4L, "Hotel California", "Bm F# A E G D Em F#", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO));
+        kSession.insert(new Song(1L, "Tisina", "Am C G Am", SkillLevel.BEGINNER, SongGenre.ROCK, LearningGoal.RHYTHM, null));
+        kSession.insert(new Song(2L, "Perfect", "G Em C D D F# Dsus4", SkillLevel.BEGINNER, SongGenre.POP, LearningGoal.RHYTHM, null));
+        kSession.insert(new Song(3L, "Let it be", "C G Am F C G F C", SkillLevel.INTERMEDIATE, SongGenre.ROCK, LearningGoal.RHYTHM, null));
+        kSession.insert(new Song(4L, "Hotel California", "Bm F# A E G D Em F#", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO, null));
         kSession.getAgenda().getAgendaGroup("filter").setFocus();
         kSession.fireAllRules();
     }
