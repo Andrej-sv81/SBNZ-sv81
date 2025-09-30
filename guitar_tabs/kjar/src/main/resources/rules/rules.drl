@@ -63,7 +63,7 @@ agenda-group "filter"
 salience 10
 when
     $candidate : CandidateSong($player : player, $song : song)
-    $playerChange : Player(email == $player.getEmail())
+    $playerChange : Player(email == $player.getEmail()) @Watch(songs, !*)
     eval($player.getGoal() == LearningGoal.NA || $song.getGoal() == $player.getGoal()) 
 then
     modify($playerChange){addSong($song.getId())}; 
