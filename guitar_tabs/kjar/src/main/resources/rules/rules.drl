@@ -1,52 +1,107 @@
-package rules;
+
 
 import com.ftn.sbnz.model.models.Player;
 import com.ftn.sbnz.model.models.Song;
 import com.ftn.sbnz.model.models.SkillLevel;
 import com.ftn.sbnz.model.models.LearningGoal;
 import com.ftn.sbnz.model.models.SongGenre;
+import com.ftn.sbnz.model.models.CandidateSong;
+import com.ftn.sbnz.model.models.LearningPlan;
 
-rule "Beginner Player gets Beginner Level Song"
-when
-    $player : Player(level == SkillLevel.BEGINNER)
-    $song : Song(level == SkillLevel.BEGINNER)
-then
-    $player.addSong($song.getId());
-    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+query "songsForPlayerByEmail" (String email)
+    $player : Player(email == email)
+    $song : Song($player.songs.contains(id) == true)
 end
 
-rule "Intermediate Player gets Intermediate Level Song"
+rule "Update Song Counter - filter"
+agenda-group "filter"
 when
-    $player : Player(level == SkillLevel.INTERMEDIATE)
-    $song : Song(level == SkillLevel.INTERMEDIATE)
+    $player : Player()
 then
-    $player.addSong($song.getId());
-    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+    $player.setSongCounter($player.getSongs().size());
+    System.out.println("Player " + $player.getEmail() + " now has " + $player.getSongs().size() + " songs.");
 end
 
-rule "Advanced Player gets Advanced Level Song"
+rule "Update Song Counter - learning"
+agenda-group "learning"
 when
-    $player : Player(level == SkillLevel.ADVANCED)
-    $song : Song(level == SkillLevel.ADVANCED)
+    $player : Player()
 then
-    $player.addSong($song.getId());
-    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+    $player.setSongCounter($player.getSongs().size());
+    System.out.println("Player " + $player.getEmail() + " now has " + $player.getSongs().size() + " songs.");
 end
 
-rule "Player that listens to Rock gets Rock Song"
+//====================================RULES====================================
+
+// === LEVEL FILTER ===
+rule "Candidate Song by Level"
+agenda-group "filter"
+lock-on-active
+salience 30
 when
-    $player : Player(genre == SongGenre.ROCK)
-    $song : Song(genre == SongGenre.ROCK)
+    $player : Player($level : level)
+    $song : Song()
+    eval($level == SkillLevel.NA || $level == $song.getLevel())
 then
-    $player.addSong($song.getId());
-    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+    insert(new CandidateSong($player, $song));
 end
 
-rule "Player that wants to learn Rhythm guitar gets Rhythm song"
+// === GENRE FILTER ===
+rule "Remove Candidate Song if Genre Mismatch"
+agenda-group "filter"
+salience 20
 when
-    $player : Player(goal == LearningGoal.RHYTHM)
-    $song : Song(goal == LearningGoal.RHYTHM)
+    $candidate : CandidateSong($player : player, $song : song)
+    eval($player.getGenre() != SongGenre.NA && $player.getGenre() != $song.getGenre())
 then
-    $player.addSong($song.getId());
-    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+    delete($candidate);
 end
+
+// === GOAL FILTER ===
+rule "Filter Candidate Song by Goal"
+agenda-group "filter"
+salience 10
+when
+    $candidate : CandidateSong($player : player, $song : song)
+    $playerChange : Player(email == $player.getEmail()) @Watch(songs, !*)
+    eval($player.getGoal() == LearningGoal.NA || $song.getGoal() == $player.getGoal()) 
+then
+    modify($playerChange){addSong($song.getId())}; 
+    System.out.println("Added song " + $song.getTitle() + " to player " + $player.getEmail());
+    delete($candidate);
+end
+
+
+//acumululate points and sort songs
+
+//acumululate hours and advance skill level
+
+//====================================BC RULES====================================
+
+query "canPlayerLearnSong" (String email, Long songId)
+    $player : Player(email == email)
+    $song : Song(id == songId)
+    eval($player.getLevel().ordinal() >= $song.getLevel().ordinal())
+end
+
+rule "Chords Match Empty"
+agenda-group "learning"
+when
+    $plan: LearningPlan($player : player, $song : song, $missing : chordsToLearn)
+    eval($missing.isEmpty() || $missing.contains("*"))
+then
+    System.out.println("Player " + $plan.getPlayer().getEmail() + " can play song " + $plan.getSong().getTitle());
+    modify($player){addSong($song.getId());}
+end
+
+rule "Chords Match"
+agenda-group "learning"
+when
+    $plan: LearningPlan($player : player, $song : song, $missing : chordsToLearn)
+    eval(!$missing.isEmpty() && !$missing.contains("*"))
+then
+    System.out.println("Player " + $plan.getPlayer().getEmail() + " cannot play song " + $plan.getSong().getTitle() + ". Missing chords: " + $missing);
+    modify($player){addSong($song.getId());}
+end
+
+
