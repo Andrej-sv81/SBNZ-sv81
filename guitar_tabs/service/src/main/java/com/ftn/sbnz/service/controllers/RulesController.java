@@ -15,7 +15,8 @@ public class RulesController {
 
     @GetMapping()
     public void fireAllRules() {
-        service.fireRules();
+        // service.fireRules();
+        service.reccomendSongs();
     }
 
     @GetMapping("/all/{email}")
