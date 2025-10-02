@@ -5,11 +5,15 @@ import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @ComponentScan(basePackages = { "com.ftn.sbnz.service.controllers", "com.ftn.sbnz.service.services" })
-@SpringBootApplication(scanBasePackages = { "com.ftn.sbnz.model", "com.ftn.sbnz.kjar" })
+@SpringBootApplication(scanBasePackages = { "com.ftn.sbnz.model", "com.ftn.sbnz.kjar"})
+@EntityScan(basePackages = "com.ftn.sbnz.model.models")
+@EnableJpaRepositories(basePackages = "com.ftn.sbnz.service.repositories")
 public class ServiceApplication {
 
 	public static void main(String[] args) {

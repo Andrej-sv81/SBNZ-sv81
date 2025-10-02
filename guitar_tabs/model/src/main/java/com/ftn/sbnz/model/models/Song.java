@@ -1,13 +1,25 @@
 package com.ftn.sbnz.model.models;
 
+import javax.persistence.*;
 
+@Entity
 public class Song {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String content;
+
+    @Enumerated(EnumType.STRING)
     private SkillLevel level;
+
+    @Enumerated(EnumType.STRING)
     private SongGenre genre;
+
+    @Enumerated(EnumType.STRING)
     private LearningGoal goal;
+
     private String artist;
     private int likes;
 

@@ -1,19 +1,38 @@
 package com.ftn.sbnz.model.models;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Player {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private SkillLevel level;
+
+    @Enumerated(EnumType.STRING)
     private SongGenre genre;
+
+    @Enumerated(EnumType.STRING)
     private LearningGoal goal;
+
     private String chords;
     private int songCounter;
-    private Set<Long> songs;
-    private Set<Long> likedSongs;
-    private Set<Long> recommendedSongs;
+
+    @ElementCollection
+    private Set<Long> songs = new HashSet<>();
+
+    @ElementCollection
+    private Set<Long> likedSongs = new HashSet<>();
+
+    @ElementCollection
+    private Set<Long> recommendedSongs = new HashSet<>();
 
     public Player() {
     }
@@ -26,9 +45,14 @@ public class Player {
         this.goal = goal;
         this.chords = chords;
         this.songCounter = 0;
-        this.songs = new HashSet<Long>();
-        this.likedSongs = new HashSet<Long>();
-        this.recommendedSongs = new HashSet<Long>();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {

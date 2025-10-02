@@ -15,13 +15,11 @@
 		<drools.version>7.49.0.Final</drools.version>
 	</properties>
 	<dependencies>
-		<!-- JPA API for entity annotations -->
 		<dependency>
-			<groupId>jakarta.persistence</groupId>
-			<artifactId>jakarta.persistence-api</artifactId>
-			<version>3.1.0</version>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<version>2.2</version>
 		</dependency>
-		<!-- Drools dependencies if needed for model classes -->
 		<dependency>
 			<groupId>org.kie</groupId>
 			<artifactId>kie-api</artifactId>
@@ -42,7 +40,6 @@
 			<artifactId>drools-compiler</artifactId>
 			<version>${drools.version}</version>
 		</dependency>
-		<!-- Lombok (optional) -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
