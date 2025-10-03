@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../api.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +15,21 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private api: ApiService) {}
 
   onLogin() {
-    // Add your login logic here
-    this.router.navigate(['/user']);
+    if(this.email && this.password) {
+      this.api.login(this.email, this.password).subscribe({
+        next: (response) => {
+          console.log('Login successful', response);
+          localStorage.setItem('userEmail', this.email);
+          this.router.navigate(['/user']);
+        },
+        error: (error) => {
+          console.error('Login failed', error);
+          alert('Login failed. Please check your credentials and try again.');
+        }
+      });}
   }
 
   switchToRegister() {

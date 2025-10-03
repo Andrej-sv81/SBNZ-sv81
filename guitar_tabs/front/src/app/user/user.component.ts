@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -15,6 +16,8 @@ export class UserComponent {
   genre = 'Rock';
   goal = 'Learn solos';
   songNumber = 12;
+
+  constructor(private router: Router) { }
 
   songsTitle = 'Liked Songs';
   songs = [
@@ -59,6 +62,6 @@ export class UserComponent {
   }
 
   logOff() {
-    throw new Error('Method not implemented.');
+    this.router.navigate(['/login'])
   }
 }

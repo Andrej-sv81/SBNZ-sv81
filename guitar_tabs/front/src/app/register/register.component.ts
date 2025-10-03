@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-register',
@@ -11,21 +12,26 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
-constructor(private router: Router) {}
+  constructor(private router: Router, private api: ApiService) {}
 
-email: string = '';
-password: string = '';
-level: string = "ANY";
-genre: string = "ANY";
-goal: string = "ANY";
+  email: string = '';
+  password: string = '';
+  level: string = "ANY";
+  genre: string = "ANY";
+  goal: string = "ANY";
 
-onRegister() {
-  //call service
-  this.router.navigate(['/login']);
-}
+  onRegister() {
+    this.api.register(this.email, this.password, this.level, this.genre, this.goal).subscribe({
+      next: (response) => {
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        alert('Registration failed');
+      }
+    });
+  }
 
-switchToLogin() {
-  this.router.navigate(['/login']);
-}
-
+  switchToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

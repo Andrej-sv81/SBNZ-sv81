@@ -25,4 +25,8 @@ public class PlayerService {
     public Player savePlayer(Player player) {
         return playerRepository.save(player);
     }
+
+    public Player findByEmail(String email) {
+        return playerRepository.findByEmail(email);
+    }
 }
