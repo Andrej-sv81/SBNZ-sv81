@@ -1,1 +1,33 @@
-<p>register works!</p>
+<div class="container">
+    <form (ngSubmit)="onRegister()">
+        <h2>Register</h2>
+        <input type="text" [(ngModel)]="email" name="email" placeholder="Email">
+        <input type="password" [(ngModel)]="password" name="password" placeholder="Password">
+        <label for="level">Level:</label>
+        <select name="level" [(ngModel)]="level">
+            <option value="ANY">Any</option>
+            <option value="BEGINNER">Beginner</option>
+            <option value="INTERMEDIATE">Intermediate</option>
+            <option value="ADVANCED">Advanced</option>
+        </select>
+        <label for="genre">Genre:</label>
+        <select name="genre" [(ngModel)]="genre">
+            <option value="ANY">Any</option>
+            <option value="ROCK">Rock</option>
+            <option value="METAL">Metal</option>
+            <option value="POP">Pop</option>
+            <option value="FOLK">Folk</option>
+            <option value="JAZZ">Jazz</option>
+            <option value="BLUEZ">Bluez</option>
+        </select>
+        <label for="goal">Goal:</label>
+        <select name="goal" [(ngModel)]="goal">
+            <option value="ANY">Any</option>
+            <option value="RHYTHM">Rhythm</option>
+            <option value="LEAD">Lead</option>
+            <option value="FINGERSTYLE">Fingerstyle</option>
+        </select>
+        <button type="submit">Register</button>
+        <button type="button" (click)="switchToLogin()">Switch to Login</button>
+    </form>
+</div>
