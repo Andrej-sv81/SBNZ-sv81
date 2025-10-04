@@ -73,5 +73,10 @@
 
 .song-card h3 {
   color: #af0000;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
+  text-decoration: dotted 4px underline;
+}
+
+.song-card b{
+  color: #af0000;
 }

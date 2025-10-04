@@ -143,6 +143,13 @@ public class Player {
         this.recommendedSongs.clear();
     }
 
+    public void clearSongs() {
+        this.songs.clear();
+    }
+    
+    public void clearLikedSongs() {
+        this.likedSongs.clear();
+    }
     @Override
     public String toString() {
         return "User{" +

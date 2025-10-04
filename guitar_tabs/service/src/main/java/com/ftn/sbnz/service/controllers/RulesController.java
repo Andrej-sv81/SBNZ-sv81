@@ -1,5 +1,7 @@
 package com.ftn.sbnz.service.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ftn.sbnz.model.models.Player;
 import com.ftn.sbnz.model.models.Song;
 import com.ftn.sbnz.service.dto.SongAddDTO;
+import com.ftn.sbnz.service.dto.SongReturnDTO;
 import com.ftn.sbnz.service.dto.UserDataDTO;
 import com.ftn.sbnz.service.dto.UserLoginDTO;
 import com.ftn.sbnz.service.dto.UserRegisterDTO;
@@ -38,8 +41,14 @@ public class RulesController {
     }
 
     @GetMapping("/all/{email}")
-    public void getAllSongs(@PathVariable String email) {
-        service.getAll(email);
+    public ResponseEntity<?> getAllSongs(@PathVariable String email) {
+        Player player = playerService.findByEmail(email);
+        if(player != null){
+            List<SongReturnDTO> songs = service.getSongs(player);
+            return new ResponseEntity<>(songs, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/learn/{email}/{songId}")

@@ -11,12 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ftn.sbnz.model.models.*;
+import com.ftn.sbnz.service.dto.SongReturnDTO;
 
 @Service
 public class ActivateRules {
 
+    @Autowired
+    private SongService songService;
+    @Autowired
+    private PlayerService playerService;
+
     private final KieContainer kieContainer;
-    private final KieSession kSession;
+    private KieSession kSession;
     private List<Song> songs = new ArrayList<Song>();
     
     @Autowired
@@ -24,6 +30,29 @@ public class ActivateRules {
         this.kieContainer = kieContainer;
         this.kSession = kieContainer.newKieSession();
     }
+
+
+    public List<SongReturnDTO> getSongs(Player player){
+        kSession = kieContainer.newKieSession();
+        player.clearSongs();
+
+        kSession.insert(player);
+        List<Song> allSongs = songService.getAll();
+        for(Song s : allSongs){
+            kSession.insert(s);
+        }
+
+        kSession.getAgenda().getAgendaGroup("filter").setFocus();
+        kSession.fireAllRules();
+
+        playerService.save(player);
+        List<Song> playerSongs = songService.getByIds(player.getSongs());
+        return SongReturnDTO.convertFromSongs(playerSongs);
+    }
+
+
+
+
 
     public void fireRules() {
         kSession.insert(new Player("andrej5@gmail.com", "123123", SkillLevel.BEGINNER, SongGenre.ROCK, LearningGoal.RHYTHM, "Am C G"));

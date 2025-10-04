@@ -19,11 +19,16 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}/register`, { email, password, level, genre, goal });
   }
 
-  getUserData(email: string): Observable<{email: string, level: string, genre: string, goal: string, songNumber: number}> {
-    return this.http.get<{email: string, level: string, genre: string, goal: string, songNumber: number}>(`${this.baseUrl}/user-data`, { params: { email } });
+  getUserData(email: string): Observable<{email: string, level: string, genre: string, goal: string, songNumber: number, chords: string}> {
+    return this.http.get<{email: string, level: string, genre: string, goal: string, songNumber: number, chords: string}>(`${this.baseUrl}/user-data`, { params: { email } });
   }
 
   addSong(title: string, content: string, level: string, genre: string, goal: string, artist: string) {
     return this.http.post<any>(`${this.baseUrl}/add-song`, { title, content, level, genre, goal, artist });
   }
+
+  getAllSongs(email: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/all/${email}`);
+  }
+
 }

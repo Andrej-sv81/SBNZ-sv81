@@ -1,5 +1,8 @@
 package com.ftn.sbnz.service.services;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +32,13 @@ public class SongService {
         song.setArtist(artist);
         song.setLikes(0);
         return songRepository.save(song);
+    }
+
+    public List<Song> getAll() {
+        return songRepository.findAll();
+    }
+
+    public List<Song> getByIds(Set<Long> songs) {
+        return songRepository.findAllById(songs);
     }
 }

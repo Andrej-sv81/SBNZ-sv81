@@ -53,6 +53,11 @@ public class PlayerService {
         dto.genre = player.getGenre().toString();
         dto.goal = player.getGoal().toString();
         dto.songNumber = player.getSongCounter();
+        dto.chords = player.getChords();
         return dto;
+    }
+
+    public void save(Player player) {
+        playerRepository.save(player);
     }
 }
