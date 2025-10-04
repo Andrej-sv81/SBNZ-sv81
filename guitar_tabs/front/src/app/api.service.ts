@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root'
 })
 export class ApiService {
-
   baseUrl = 'http://localhost:8080/api/rules';
 
   constructor(private http: HttpClient) { }
@@ -31,4 +30,23 @@ export class ApiService {
     return this.http.get<any[]>(`${this.baseUrl}/all/${email}`);
   }
 
+  updateUser(email: string, level: string, genre: string, goal: string, chords: string) {
+    return this.http.put<any>(`${this.baseUrl}/update-user`, { email, level, genre, goal, chords });
+  }
+
+  toggleLikeSong(email: string, songId: number) {
+    return this.http.post<number[]>(`${this.baseUrl}/toggle-like/${email}/${songId}`, {});
+  }
+
+  getLikedSongs(email: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/liked-songs`, { params: { email } });
+  }
+
+  getLikedSongIds(email: string): Observable<number[]> {
+    return this.http.get<number[]>(`${this.baseUrl}/liked-ids`, { params: { email } });
+  }
+
+  getRecommendedSongs(email: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/recommended/${email}`);
+  }
 }

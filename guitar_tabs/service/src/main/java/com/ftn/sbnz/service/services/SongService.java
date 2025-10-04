@@ -41,4 +41,13 @@ public class SongService {
     public List<Song> getByIds(Set<Long> songs) {
         return songRepository.findAllById(songs);
     }
+
+    public Song getById(Long songId) {
+        return songRepository.findById(songId).orElse(null);
+    }
+
+    public void save(Song song) {
+        songRepository.save(song);
+    }
+    
 }

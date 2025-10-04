@@ -6,6 +6,7 @@ import java.util.List;
 import com.ftn.sbnz.model.models.Song;
 
 public class SongReturnDTO {
+    public Long id;
     public String title;
     public String content;
     public String level;
@@ -14,7 +15,8 @@ public class SongReturnDTO {
     public String artist;
     public int likes;
 
-    public SongReturnDTO(String title, String content, String level, String genre, String goal, String artist, int likes) {
+    public SongReturnDTO(Long id, String title, String content, String level, String genre, String goal, String artist, int likes) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.level = level;
@@ -30,7 +32,7 @@ public class SongReturnDTO {
     public static List<SongReturnDTO> convertFromSongs(List<Song> songs) {
         List<SongReturnDTO> dtos = new ArrayList<>();
         for (Song song : songs) {
-            dtos.add(new SongReturnDTO(song.getTitle(), song.getContent(), song.getLevel().toString(), song.getGenre().toString(), song.getGoal().toString(), song.getArtist(), song.getLikes()));
+            dtos.add(new SongReturnDTO(song.getId(),song.getTitle(), song.getContent(), song.getLevel().toString(), song.getGenre().toString(), song.getGoal().toString(), song.getArtist(), song.getLikes()));
         }
         return dtos;
     }

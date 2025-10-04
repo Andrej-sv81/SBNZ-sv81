@@ -80,3 +80,32 @@
 .song-card b{
   color: #af0000;
 }
+
+.info-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.edit-btn {
+  max-width: 40px;
+  text-align: center;
+  padding: 5px;
+}
+
+/* Add to user.component.css or global styles */
+.heart {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #222;
+  transition: color 0.2s;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.heart.liked {
+  color: #af0000;
+}

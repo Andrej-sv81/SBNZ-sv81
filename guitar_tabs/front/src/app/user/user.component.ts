@@ -19,8 +19,11 @@ export class UserComponent {
   songNumber = 12;
   chords = 'Am C G';
   songsTitle = 'All Songs';
+  shownSongs: any[] = [];
   songs: any[] = [];
-
+  likedSongs: any[] = [];
+  likedIds: number[] = [];
+  recomendedSongs: any[] = [];
 
   constructor(private router: Router, private api: ApiService) { }
 
@@ -34,7 +37,7 @@ export class UserComponent {
           this.genre = data.genre;
           this.goal = data.goal;
           this.songNumber = data.songNumber;
-          this.chords = data.chords
+          this.chords = data.chords;
         },
         error: (err) => {
           console.error('Error fetching user data', err);
@@ -42,20 +45,25 @@ export class UserComponent {
         }
     });}
 
-
     this.api.getAllSongs(this.email).subscribe({
       next: (data) => {
         this.songs = data;
+        this.shownSongs = this.songs;
         this.songNumber = this.songs.length;
       },
       error: (err) => {
         console.error('Error fetching songs', err);
         alert('Error fetching songs');
       }});
+
+    this.api.getLikedSongIds(this.email).subscribe({
+      next: (data) => {
+        this.likedIds = data;
+      },
+      error: () => this.likedIds = []
+    });
   }
 
-
-  
 
   addSong() {
     this.router.navigate(['/song'])
@@ -63,17 +71,23 @@ export class UserComponent {
 
   showLiked() {
     this.songsTitle = 'Liked Songs';
-    // this.songs = ... set liked songs
+    this.api.getLikedSongs(this.email).subscribe({
+      next: (data) => this.shownSongs = data,
+      error: () => this.shownSongs = []
+    });
   }
 
   showRecommended() {
     this.songsTitle = 'Recommended Songs';
-    // this.songs = ... set recommended songs
+    this.api.getRecommendedSongs(this.email).subscribe({
+      next: (data) => this.shownSongs = data,
+      error: () => this.shownSongs = []
+    });
   }
 
   showAll() {
     this.songsTitle = 'All Songs';
-    // this.songs = ... set all songs
+    this.shownSongs = this.songs;
   }
 
   logOff() {
@@ -81,5 +95,29 @@ export class UserComponent {
     this.router.navigate(['/login'])
   }
 
+  editUser() {
+    this.router.navigate(['/user-edit'], {
+      state: {
+        email: this.email,
+        skill: this.skill,
+        genre: this.genre,
+        goal: this.goal,
+        chords: this.chords
+      }
+    });
+  }
 
+  isLiked(songId: number): boolean {
+    return this.likedIds.includes(songId);
+  }
+
+  toggleLike(songId: number) {
+    this.api.toggleLikeSong(this.email, songId).subscribe({
+      next: (updatedLikedSongs: number[]) => {
+        this.likedIds = updatedLikedSongs;
+      },
+      error: () => alert('Failed to update liked songs')
+    });
+
+    }
 }

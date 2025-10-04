@@ -7,7 +7,6 @@ import com.ftn.sbnz.model.models.SongGenre;
 import com.ftn.sbnz.service.dto.UserDataDTO;
 import com.ftn.sbnz.service.repositories.PlayerRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -60,4 +59,15 @@ public class PlayerService {
     public void save(Player player) {
         playerRepository.save(player);
     }
+
+    public Player updateUser(String email, String level, String genre, String goal, String chords) {
+        Player player = playerRepository.findByEmail(email);
+        if (player == null) return null;
+        player.setLevel(level != null ? SkillLevel.valueOf(level) : SkillLevel.NA);
+        player.setGenre(genre != null ? SongGenre.valueOf(genre) : SongGenre.NA);
+        player.setGoal(goal != null ? LearningGoal.valueOf(goal) : LearningGoal.NA);
+        player.setChords(chords);
+        return playerRepository.save(player);
+    }
+    
 }

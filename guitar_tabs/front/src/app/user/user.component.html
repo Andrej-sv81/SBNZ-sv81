@@ -1,6 +1,9 @@
 <div class="user-page">
   <div class="user-info">
-    <h2>User Info</h2>
+    <div class="info-wrapper">
+      <h2>User Info</h2>
+      <button class="edit-btn" (click)="editUser()">✏️</button>
+    </div>
     <div class="info-row"><label>Email:</label> <span>{{ email }}</span></div>
     <div class="info-row"><label>Skill:</label> <span>{{ skill }}</span></div>
     <div class="info-row"><label>Genre:</label> <span>{{ genre }}</span></div>
@@ -16,8 +19,14 @@
   <div class="songs-table">
     <h2>{{ songsTitle }}</h2>
     <div class="songs-grid">
-      <div class="song-card" *ngFor="let song of songs">
+      <div class="song-card" *ngFor="let song of shownSongs">
         <h3>{{ song.title }}</h3>
+        <span 
+          class="heart" 
+          [class.liked]="isLiked(song.id)" 
+          (click)="toggleLike(song.id)">
+          &#10084;
+        </span>
         <div>
           <p><b>Genre:</b> {{ song.genre }}</p>
           <p><b>Level:</b> {{ song.level }}</p>

@@ -118,7 +118,7 @@ when
     $score : SongScore($song : song, $player : player, $points : points)
     eval($player.getLevel().ordinal() >= $song.getLevel().ordinal())
 then
-    modify($score){ addPoints(1); }
+    modify($score){ addPoints(7); }
 end
 
 rule "Points for matching genre"
@@ -128,7 +128,7 @@ when
     $score : SongScore($song : song, $player : player, $points : points)
     eval($player.getGenre() == $song.getGenre())
 then
-    modify($score){ addPoints(1); }
+    modify($score){ addPoints(7); }
 end
 
 rule "Points for matching learning goal"
@@ -138,7 +138,7 @@ when
     $score : SongScore($song : song, $player : player, $points : points)
     eval($player.getGoal() == $song.getGoal())
 then
-    modify($score){ addPoints(1); }
+    modify($score){ addPoints(3); }
 end
 
 
@@ -151,23 +151,49 @@ when
         eval($player.getLikedSongs().contains($id))
     eval($song.getArtist().equals($artist))
 then
-    modify($score){ addPoints(1); }
+    modify($score){ addPoints(6); }
 end
 
 
-
-// more points for more popular songs
-rule "Points for popular songs"
+rule "Points for popular songs 100"
 agenda-group "recommend"
 lock-on-active
 when
     $score : SongScore($song : song, $points : points)
-    eval($song.getLikes() >= 50)
+    eval($song.getLikes() >= 100 && $song.getLikes() < 200)
 then
     modify($score){ addPoints(1); }
 end
 
+rule "Points for popular songs 200"
+agenda-group "recommend"
+lock-on-active
+when
+    $score : SongScore($song : song, $points : points)
+    eval($song.getLikes() >= 200 && $song.getLikes() < 300)
+then
+    modify($score){ addPoints(2); }
+end
 
+rule "Points for popular songs 300"
+agenda-group "recommend"
+lock-on-active
+when
+    $score : SongScore($song : song, $points : points)
+    eval($song.getLikes() >= 300 && $song.getLikes() < 400)
+then
+    modify($score){ addPoints(3); }
+end
+
+rule "Points for popular songs 400"
+agenda-group "recommend"
+lock-on-active
+when
+    $score : SongScore($song : song, $points : points)
+    eval($song.getLikes() >= 400)
+then
+    modify($score){ addPoints(4); }
+end
 
 rule "Add Top 5 Recommended Songs to Player"
 agenda-group "recommend"
