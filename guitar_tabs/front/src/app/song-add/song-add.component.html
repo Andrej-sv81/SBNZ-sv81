@@ -1,0 +1,31 @@
+<div class="container">
+  <form (ngSubmit)="onAddSong()">
+    <h2>Add Song</h2>
+    <input type="text" [(ngModel)]="title" name="title" placeholder="Title" required>
+    <input type="text" [(ngModel)]="artist" name="artist" placeholder="Artist" required>
+    <input type="text" [(ngModel)]="content" name="content" placeholder="Chords/Content" required>
+    <label for="level">Level:</label>
+    <select name="level" [(ngModel)]="level">
+      <option value="BEGINNER">Beginner</option>
+      <option value="INTERMEDIATE">Intermediate</option>
+      <option value="ADVANCED">Advanced</option>
+    </select>
+    <label for="genre">Genre:</label>
+    <select name="genre" [(ngModel)]="genre">
+      <option value="ROCK">Rock</option>
+      <option value="METAL">Metal</option>
+      <option value="POP">Pop</option>
+      <option value="FOLK">Folk</option>
+      <option value="JAZZ">Jazz</option>
+      <option value="BLUEZ">Bluez</option>
+    </select>
+    <label for="goal">Goal:</label>
+    <select name="goal" [(ngModel)]="goal">
+      <option value="RHYTHM">Rhythm</option>
+      <option value="SOLO">Solo</option>
+      <option value="FINGERSTYLE">Fingerstyle</option>
+    </select>
+    <button type="submit">Add Song</button>
+    <button type="button" (click)="onCancel()">Cancel</button>
+  </form>
+</div>

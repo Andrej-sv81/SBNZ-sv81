@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,24 @@ export class UserComponent {
   goal = 'Learn solos';
   songNumber = 12;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private api: ApiService) { }
+
+  ngOnInit(){
+    const userEmail = localStorage.getItem("userEmail");
+    if(userEmail){
+      this.email = userEmail;
+      this.api.getUserData(userEmail).subscribe({
+        next: (data) => {
+          this.skill = data.level;
+          this.genre = data.genre;
+          this.goal = data.goal;
+          this.songNumber = data.songNumber;
+        },
+        error: (err) => {
+          console.error('Error fetching user data', err);
+        }
+    });}
+  }
 
   songsTitle = 'Liked Songs';
   songs = [
@@ -51,6 +69,10 @@ export class UserComponent {
     // ...more songs
   ];
 
+  addSong() {
+    this.router.navigate(['/song'])
+  }
+
   showLiked() {
     this.songsTitle = 'Liked Songs';
     // this.songs = ... set liked songs
@@ -61,7 +83,15 @@ export class UserComponent {
     // this.songs = ... set recommended songs
   }
 
+  showAll() {
+    this.songsTitle = 'All Songs';
+    // this.songs = ... set all songs
+  }
+
   logOff() {
+    localStorage.removeItem("userEmail")
     this.router.navigate(['/login'])
   }
+
+
 }

@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ftn.sbnz.model.models.LearningGoal;
 import com.ftn.sbnz.model.models.Player;
-import com.ftn.sbnz.model.models.SkillLevel;
-import com.ftn.sbnz.model.models.SongGenre;
+import com.ftn.sbnz.model.models.Song;
+import com.ftn.sbnz.service.dto.SongAddDTO;
+import com.ftn.sbnz.service.dto.UserDataDTO;
 import com.ftn.sbnz.service.dto.UserLoginDTO;
 import com.ftn.sbnz.service.dto.UserRegisterDTO;
 import com.ftn.sbnz.service.services.ActivateRules;
 import com.ftn.sbnz.service.services.PlayerService;
+import com.ftn.sbnz.service.services.SongService;
 
 @RestController
 @RequestMapping("/api/rules")
@@ -27,6 +28,8 @@ public class RulesController {
     private ActivateRules service;
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    private SongService songService;
 
     @GetMapping()
     public void fireAllRules() {
@@ -54,23 +57,27 @@ public class RulesController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserRegisterDTO> register(@RequestBody UserRegisterDTO dto) {
+    public ResponseEntity<UserLoginDTO> register(@RequestBody UserRegisterDTO dto) {
         Player existing = playerService.findByEmail(dto.email);
         if (existing != null) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
-        Player newPlayer = new Player();
-        newPlayer.setEmail(dto.email);
-        newPlayer.setPassword(dto.password);
-        newPlayer.setLevel(dto.level != null ? SkillLevel.valueOf(dto.level) : SkillLevel.NA);
-        newPlayer.setGenre(dto.genre != null ? SongGenre.valueOf(dto.genre) : SongGenre.NA);
-        newPlayer.setGoal(dto.goal != null ? LearningGoal.valueOf(dto.goal) : LearningGoal.NA);
-        playerService.savePlayer(newPlayer);
+        Player newPlayer = playerService.createAndSavePlayer(dto.email, dto.password, dto.level, dto.genre, dto.goal);
+        return new ResponseEntity<>(new UserLoginDTO(newPlayer.getEmail(), newPlayer.getPassword()), HttpStatus.CREATED);
+    }
 
-        return new ResponseEntity<>(new UserRegisterDTO(newPlayer.getEmail(),
-                                                        newPlayer.getPassword(),
-                                                        newPlayer.getLevel().toString(),
-                                                        newPlayer.getGenre().toString(),
-                                                        newPlayer.getGoal().toString()), HttpStatus.CREATED);
+    @GetMapping("/user-data")
+    public ResponseEntity<UserDataDTO> getUserData(String email) {
+        UserDataDTO dto = playerService.getUserDataDTO(email);
+        if (dto != null) {
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/add-song")
+    public ResponseEntity<?> addSong(@RequestBody SongAddDTO dto) {
+        Song song = songService.createAndAddSong(dto.title, dto.content, dto.level, dto.genre, dto.goal, dto.artist);
+        return new ResponseEntity<>(song, HttpStatus.CREATED);
     }
 }

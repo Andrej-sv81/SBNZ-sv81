@@ -31,10 +31,10 @@ public class ActivateRules {
         kSession.insert(new Player("rhythmplayer@gmail.com", "rhythmrules", SkillLevel.NA, SongGenre.NA, LearningGoal.RHYTHM, "*"));
 
 
-        kSession.insert(new Song(1L, "Tisina", "Am C G Am", SkillLevel.BEGINNER, SongGenre.ROCK, LearningGoal.RHYTHM, "Bajaga"));
-        kSession.insert(new Song(2L, "Perfect", "G Em C D D F# Dsus4", SkillLevel.BEGINNER, SongGenre.POP, LearningGoal.RHYTHM, "Ed Sheeran"));
-        kSession.insert(new Song(3L, "Let it be", "C G Am F C G F C", SkillLevel.INTERMEDIATE, SongGenre.ROCK, LearningGoal.RHYTHM, "Bajaga"));
-        kSession.insert(new Song(4L, "Hotel California", "Bm F# A E G D Em F#", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO, "Eagles"));
+        kSession.insert(new Song( "Tisina", "Am C G Am", SkillLevel.BEGINNER, SongGenre.ROCK, LearningGoal.RHYTHM, "Bajaga"));
+        kSession.insert(new Song( "Perfect", "G Em C D D F# Dsus4", SkillLevel.BEGINNER, SongGenre.POP, LearningGoal.RHYTHM, "Ed Sheeran"));
+        kSession.insert(new Song( "Let it be", "C G Am F C G F C", SkillLevel.INTERMEDIATE, SongGenre.ROCK, LearningGoal.RHYTHM, "Bajaga"));
+        kSession.insert(new Song( "Hotel California", "Bm F# A E G D Em F#", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO, "Eagles"));
         kSession.getAgenda().getAgendaGroup("filter").setFocus();
         kSession.fireAllRules();
     }
@@ -68,16 +68,16 @@ public class ActivateRules {
     }
 
     public void reccomendSongs(){
-        this.songs.add(new Song(1L, "Tisina", "Am C G Am", SkillLevel.BEGINNER, SongGenre.ROCK, LearningGoal.RHYTHM, "Bajaga"));
-        this.songs.add(new Song(2L, "Perfect", "G Em C D D F# Dsus4", SkillLevel.BEGINNER, SongGenre.POP, LearningGoal.RHYTHM, "Ed Sheeran"));
-        this.songs.add(new Song(3L, "Let it be", "C G Am F C G F C", SkillLevel.INTERMEDIATE, SongGenre.ROCK, LearningGoal.RHYTHM, "Beatles"));
-        this.songs.add(new Song(4L, "Hotel California", "Bm F# A E G D Em F#", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO, "Eagles"));
-        this.songs.add(new Song(5L, "Bohemian Rhapsody", "Bb6 Cm7 F7 Bb6 Gm7 Cm7 F7 Bb6", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO, "Queen"));
-        this.songs.add(new Song(6L, "Imagine", "C Cmaj7 F Am Dm G", SkillLevel.BEGINNER, SongGenre.POP, LearningGoal.RHYTHM, "John Lennon"));
-        this.songs.add(new Song(7L, "Smells Like Teen Spirit", "F Bb Ab Db", SkillLevel.INTERMEDIATE, SongGenre.ROCK, LearningGoal.RHYTHM, "Nirvana"));
-        this.songs.add(new Song(8L, "Billie Jean", "F#m G#m A B", SkillLevel.INTERMEDIATE, SongGenre.POP, LearningGoal.RHYTHM, "Michael Jackson"));
-        this.songs.add(new Song(9L, "Wonderwall", "Em G D   A7sus4", SkillLevel.BEGINNER, SongGenre.ROCK, LearningGoal.RHYTHM, "Oasis"));
-        this.songs.add(new Song(10L, "Sweet Child O' Mine", "   D C G D", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO, "Guns N' Roses"));
+        this.songs.add(new Song( "Tisina", "Am C G Am", SkillLevel.BEGINNER, SongGenre.ROCK, LearningGoal.RHYTHM, "Bajaga"));
+        this.songs.add(new Song( "Perfect", "G Em C D D F# Dsus4", SkillLevel.BEGINNER, SongGenre.POP, LearningGoal.RHYTHM, "Ed Sheeran"));
+        this.songs.add(new Song( "Let it be", "C G Am F C G F C", SkillLevel.INTERMEDIATE, SongGenre.ROCK, LearningGoal.RHYTHM, "Beatles"));
+        this.songs.add(new Song( "Hotel California", "Bm F# A E G D Em F#", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO, "Eagles"));
+        this.songs.add(new Song( "Bohemian Rhapsody", "Bb6 Cm7 F7 Bb6 Gm7 Cm7 F7 Bb6", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO, "Queen"));
+        this.songs.add(new Song( "Imagine", "C Cmaj7 F Am Dm G", SkillLevel.BEGINNER, SongGenre.POP, LearningGoal.RHYTHM, "John Lennon"));
+        this.songs.add(new Song( "Smells Like Teen Spirit", "F Bb Ab Db", SkillLevel.INTERMEDIATE, SongGenre.ROCK, LearningGoal.RHYTHM, "Nirvana"));
+        this.songs.add(new Song( "Billie Jean", "F#m G#m A B", SkillLevel.INTERMEDIATE, SongGenre.POP, LearningGoal.RHYTHM, "Michael Jackson"));
+        this.songs.add(new Song( "Wonderwall", "Em G D   A7sus4", SkillLevel.BEGINNER, SongGenre.ROCK, LearningGoal.RHYTHM, "Oasis"));
+        this.songs.add(new Song( "Sweet Child O' Mine", "   D C G D", SkillLevel.ADVANCED, SongGenre.ROCK, LearningGoal.SOLO, "Guns N' Roses"));
         this.songs.get(6).setLikes(61);
         this.songs.get(8).setLikes(60);
 

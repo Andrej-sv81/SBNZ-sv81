@@ -26,8 +26,7 @@ public class Song {
     public Song() {
     }
 
-    public Song(Long id, String title, String content, SkillLevel level, SongGenre genre, LearningGoal goal, String artist) {
-        this.id = id;
+    public Song(String title, String content, SkillLevel level, SongGenre genre, LearningGoal goal, String artist) {
         this.title = title;
         this.content = content;
         this.level = level;
