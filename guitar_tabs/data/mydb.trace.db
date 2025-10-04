@@ -1,0 +1,12 @@
+2025-10-04 11:41:44 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SONGS" not found; SQL statement:
+UPDATE songs
+SET likes = FLOOR(50 + RAND() * (500 - 50 + 1)) [42102-214]
+2025-10-04 11:41:50 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SONGS" not found; SQL statement:
+UPDATE songs
+SET likes = FLOOR(50 + RANDOM
+() * (500 - 50 + 1)) [42102-214]
+2025-10-04 11:47:13 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]PLAYER_ID"; expected "PREPARE"; SQL statement:
+PLAYER_ID [42001-214]
