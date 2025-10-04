@@ -154,7 +154,7 @@ public class RulesController {
         Player player = playerService.findByEmail(email);
         if (player == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        List<SongReturnDTO> songs2 = service.getSongs(player);
+        service.getSongs(player);
         Set<Long> recommendedIds = player.getRecommendedSongs();
         List<Song> songs = songService.getByIds(recommendedIds);
         List<SongReturnDTO> dtos = SongReturnDTO.convertFromSongs(songs);
