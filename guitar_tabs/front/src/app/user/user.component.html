@@ -1,0 +1,40 @@
+<div class="user-page">
+  <div class="user-info">
+    <div class="info-wrapper">
+      <h2>User Info</h2>
+      <button class="edit-btn" (click)="editUser()">✏️</button>
+    </div>
+    <div class="info-row"><label>Email:</label> <span>{{ email }}</span></div>
+    <div class="info-row"><label>Skill:</label> <span>{{ skill }}</span></div>
+    <div class="info-row"><label>Genre:</label> <span>{{ genre }}</span></div>
+    <div class="info-row"><label>Goal:</label> <span>{{ goal }}</span></div>
+    <div class="info-row"><label>Number of Songs:</label> <span>{{ songNumber }}</span></div>
+    <div class="info-row"><label>Chords:</label> <span>{{ chords }}</span></div>
+    <button (click)="addSong()">Add Song</button>
+    <button (click)="showAll()">All Songs</button>
+    <button (click)="showLiked()">Liked Songs</button>
+    <button (click)="showRecommended()">Recommended Songs</button>
+    <button (click)="logOff()">Log off</button>
+  </div>
+  <div class="songs-table">
+    <h2>{{ songsTitle }}</h2>
+    <div class="songs-grid">
+      <div class="song-card" *ngFor="let song of shownSongs">
+        <h3>{{ song.title }}</h3>
+        <span 
+          class="heart" 
+          [class.liked]="isLiked(song.id)" 
+          (click)="toggleLike(song.id)">
+          &#10084;
+        </span>
+        <div>
+          <p><b>Genre:</b> {{ song.genre }}</p>
+          <p><b>Level:</b> {{ song.level }}</p>
+          <p><b>Goal:</b> {{ song.goal }}</p>
+          <p><b>Artist:</b> {{ song.artist }}</p> 
+          <p><b>Likes:</b> {{song.likes}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

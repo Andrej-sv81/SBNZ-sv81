@@ -1,17 +1,38 @@
 package com.ftn.sbnz.model.models;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Player {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private SkillLevel level;
+
+    @Enumerated(EnumType.STRING)
     private SongGenre genre;
+
+    @Enumerated(EnumType.STRING)
     private LearningGoal goal;
+
     private String chords;
     private int songCounter;
-    private Set<Long> songs;
+
+    @ElementCollection
+    private Set<Long> songs = new HashSet<>();
+
+    @ElementCollection
+    private Set<Long> likedSongs = new HashSet<>();
+
+    @ElementCollection
+    private Set<Long> recommendedSongs = new HashSet<>();
 
     public Player() {
     }
@@ -24,7 +45,14 @@ public class Player {
         this.goal = goal;
         this.chords = chords;
         this.songCounter = 0;
-        this.songs = new HashSet<Long>();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -91,6 +119,37 @@ public class Player {
         this.songs.add(id);
     }
 
+    public Set<Long> getLikedSongs() {
+        return likedSongs;
+    }
+
+    public void addLikedSong(Long id) {
+        this.likedSongs.add(id);
+    }
+
+    public void removeLikedSong(Long id) {
+        this.likedSongs.remove(id);
+    }
+
+    public Set<Long> getRecommendedSongs() {
+        return recommendedSongs;
+    }
+
+    public void addRecommendedSong(Long id) {
+        this.recommendedSongs.add(id);
+    }
+
+    public void clearRecommendedSongs() {
+        this.recommendedSongs.clear();
+    }
+
+    public void clearSongs() {
+        this.songs.clear();
+    }
+    
+    public void clearLikedSongs() {
+        this.likedSongs.clear();
+    }
     @Override
     public String toString() {
         return "User{" +
